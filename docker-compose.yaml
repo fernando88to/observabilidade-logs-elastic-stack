@@ -31,6 +31,8 @@ services:
             ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
         networks:
             - rede
+        depends_on:
+            - es01
 
     nginx1:
         build:
@@ -54,6 +56,30 @@ services:
             - kibana
         ports:
             - 9001:80
+        networks:
+            - rede
+
+    nginx3:
+        build:
+            context: nginx3
+            dockerfile: Dockerfile
+        depends_on:
+            - es01
+            - kibana
+        ports:
+            - 9002:80
+        networks:
+            - rede
+
+    tomcat9:
+        build:
+            context: tomcat9
+            dockerfile: Dockerfile
+        depends_on:
+            - es01
+            - kibana
+        ports:
+            - 9003:8080
         networks:
             - rede
 
