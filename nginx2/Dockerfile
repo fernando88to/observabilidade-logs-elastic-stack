@@ -1,5 +1,8 @@
 FROM nginx:latest
 
+ENV TZ="America/Araguaina"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN rm -f /var/log/nginx/access.log && rm -f /var/log/nginx/error.log
 
 RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.13.0-amd64.deb && \

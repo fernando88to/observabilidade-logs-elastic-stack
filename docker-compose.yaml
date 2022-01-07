@@ -2,7 +2,10 @@ version: '3'
 
 services: 
     es01:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.11.2
+        #image: docker.elastic.co/elasticsearch/elasticsearch:7.11.2
+        build:
+            context: elasticsearch
+            dockerfile: Dockerfile
         #container_name: es01
         hostname: es01
         environment:
@@ -21,7 +24,10 @@ services:
             - rede
     
     kibana:
-        image: docker.elastic.co/kibana/kibana:7.11.2
+        #image: docker.elastic.co/kibana/kibana:7.11.2
+        build:
+            context: kibana
+            dockerfile: Dockerfile
         #container_name: kibana
         #container_name: kibana
         ports:

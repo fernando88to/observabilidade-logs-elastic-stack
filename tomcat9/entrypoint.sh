@@ -1,5 +1,5 @@
 #!/bin/bash
 
-filebeat modules enable apache
+filebeat modules enable tomcat
 filebeat setup
 service filebeat start
