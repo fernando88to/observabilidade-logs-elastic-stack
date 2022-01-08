@@ -13,6 +13,7 @@ COPY catalina.sh /usr/local/tomcat/bin/catalina.sh
 
 
 COPY app-0.1.war $CATALINA_HOME/webapps/ROOT.war
+COPY app-0.1.war $CATALINA_HOME/webapps/app.war
 
 
 COPY docker-entrypoint.sh /usr/local/bin

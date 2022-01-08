@@ -16,6 +16,7 @@ ADD nginx.conf /etc/nginx/nginx.conf
 ADD default.conf /etc/nginx/conf.d/default.conf
 
 COPY filebeat.yml /etc/filebeat/filebeat.yml
+COPY pipeline.yml /usr/share/filebeat/module/nginx/access/ingest/pipeline.yml
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]

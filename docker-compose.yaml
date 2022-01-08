@@ -40,30 +40,30 @@ services:
         depends_on:
             - es01
 
-    nginx1:
-        build:
-            context: nginx1
-            dockerfile: Dockerfile
-        depends_on:
-            - es01
-            - kibana
-        ports: 
-            - 9000:80
-        networks:
-            - rede
-
-
-    nginx2:
-        build:
-            context: nginx2
-            dockerfile: Dockerfile
-        depends_on:
-            - es01
-            - kibana
-        ports:
-            - 9001:80
-        networks:
-            - rede
+#    nginx1:
+#        build:
+#            context: nginx1
+#            dockerfile: Dockerfile
+#        depends_on:
+#            - es01
+#            - kibana
+#        ports:
+#            - 9000:80
+#        networks:
+#            - rede
+#
+#
+#    nginx2:
+#        build:
+#            context: nginx2
+#            dockerfile: Dockerfile
+#        depends_on:
+#            - es01
+#            - kibana
+#        ports:
+#            - 9001:80
+#        networks:
+#            - rede
 
     nginx3:
         build:
@@ -81,6 +81,8 @@ services:
         build:
             context: tomcat9
             dockerfile: Dockerfile
+        container_name: tomcat9
+        hostname: tomcat9server
         depends_on:
             - es01
             - kibana
@@ -89,6 +91,32 @@ services:
         networks:
             - rede
 
+
+    filebeat:
+        build: log_container
+        container_name: filebeat
+        hostname: mydockerhost
+        #restart: unless-stopped
+        depends_on:
+            -   es01
+        environment:
+            - ELASTICSEARCH_HOSTS=es01:9200
+        labels:
+            co.elastic.logs/enabled: "false"
+        volumes:
+            - type: bind
+              source: /var/run/docker.sock
+              target: /var/run/docker.sock
+            - type: bind
+              source: /var/lib/docker
+              target: /var/lib/docker
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "2"
+        networks:
+            - rede
 
 networks:
     rede:
