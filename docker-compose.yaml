@@ -92,6 +92,21 @@ services:
             - rede
 
 
+    tomcatmonitoramento:
+        build:
+            context: monitoramento_logs
+            dockerfile: Dockerfile
+        container_name: tomcatmonitoramento
+        hostname: tomcatmonitoramento
+        depends_on:
+            - es01
+            - kibana
+        ports:
+            - 9004:8080
+        networks:
+            - rede
+
+
     filebeat:
         build: log_container
         container_name: filebeat
