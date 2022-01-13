@@ -12,6 +12,7 @@ filebeat.inputs:
     # Paths that should be crawled and fetched. Glob based paths.
     paths:
       - /var/log/aplicacao/*.json
+    json.message_key: valor
     json.keys_under_root: true
 
     # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -145,10 +146,13 @@ output.elasticsearch:
   username: "elastic"
   password: "changeme"
 
-processors:
-  - add_host_metadata: ~
-  - add_cloud_metadata: ~
-  - add_docker_metadata: ~
-  - add_kubernetes_metadata: ~
-  - decode_json_fields:
-      fields: ["inner"]
+  template.name: filebeat
+  template.path: filebeat.template.json
+
+#processors:
+#  - add_host_metadata: ~
+#  - add_cloud_metadata: ~
+#  - add_docker_metadata: ~
+#  - add_kubernetes_metadata: ~
+#  - decode_json_fields:
+#      fields: ["inner"]
